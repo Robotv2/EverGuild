@@ -1,0 +1,6 @@
+name: GuildConquest
+version: ${project.version}
+main: fr.robotv2.guildconquest.main
+api-version: 1.16
+authors: [ Robotv2 ]
+description: Un plugin de guilde et de conquête
