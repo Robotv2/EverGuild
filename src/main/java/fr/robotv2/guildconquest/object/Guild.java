@@ -58,28 +58,4 @@ public class Guild {
     }
 
     public int getSize() { return getMembres().size(); }
-
-    public void addMembers(OfflinePlayer player) {
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-
-        out.writeUTF("add-member");
-        out.writeUTF(getUuid().toString());
-        out.writeUTF(player.getUniqueId().toString());
-
-        main.getServer().sendPluginMessage(main, "guild:channel", out.toByteArray());
-
-        //TODO
-    }
-
-    public void kickMembers(OfflinePlayer player) {
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-
-        out.writeUTF("kick-member");
-        out.writeUTF(getUuid().toString());
-        out.writeUTF(player.getUniqueId().toString());
-
-        main.getServer().sendPluginMessage(main, "guild:channel", out.toByteArray());
-
-        //TODO
-    }
 }

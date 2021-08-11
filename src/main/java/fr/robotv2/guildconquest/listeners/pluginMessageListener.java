@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,7 +57,6 @@ public class pluginMessageListener implements PluginMessageListener {
                     player1.sendMessage(utilsGen.colorize("&7Vous venez de reçevoir une invitation pour rejoindre la guilde: &f" + guild1.getName()));
                     main.getUtils().getUtilsMessage().inviteAccept(player1);
                     main.getUtils().getUtilsMessage().inviteDeny(player1);
-
                 case "remove-guild":
                     UUID uuid2 = UUID.fromString(in.readUTF()); //GUILD UUID
                     if(main.getUtils().getUtilsGuild().guildByUUID.containsValue(uuid2)) {

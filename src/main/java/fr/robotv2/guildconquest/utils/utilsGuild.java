@@ -14,7 +14,6 @@ import java.util.UUID;
 public class utilsGuild {
 
     public HashMap<UUID, Guild> guildByUUID = new HashMap<>();
-    public HashMap<Player, Guild> inInvite = new HashMap<>();
 
     private main main;
     public utilsGuild(main main) {

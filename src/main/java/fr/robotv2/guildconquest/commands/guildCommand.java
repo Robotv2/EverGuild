@@ -6,8 +6,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -19,6 +17,8 @@ public class guildCommand implements CommandExecutor, TabCompleter {
     private delete delete;
     private invite invite;
     private kick kick;
+    private accept accept;
+    private deny deny;
     private help help;
     public guildCommand(main main) {
         this.main = main;
@@ -27,6 +27,8 @@ public class guildCommand implements CommandExecutor, TabCompleter {
         this.delete = new delete(main);
         this.invite = new invite(main);
         this.kick = new kick(main);
+        this.accept = new accept(main);
+        this.deny = new deny(main);
         this.help = new help();
     }
 
