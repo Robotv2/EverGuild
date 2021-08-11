@@ -4,6 +4,7 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 import fr.robotv2.guildconquest.main;
 import fr.robotv2.guildconquest.object.Guild;
+import fr.robotv2.guildconquest.utils.utilsGen;
 import fr.robotv2.guildconquest.utils.utilsGuild;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -44,6 +45,23 @@ public class pluginMessageListener implements PluginMessageListener {
                     if(utilsGuild.guildByUUID.containsKey(uuid))
                         utilsGuild.guildByUUID.remove(uuid);
                     utilsGuild.guildByUUID.put(uuid, guild);
+
+                case "invite-player":
+                    UUID uuid1 = UUID.fromString(in.readUTF()); //GUILD UUID
+                    Player player1 = Bukkit.getPlayer(UUID.fromString(in.readUTF())); //PLAYER UUID
+
+                    main.getUtils().getUtilsGuild().actualize(uuid1);
+                    Guild guild1 = main.getUtils().utilsGuild.getGuild(uuid1);
+
+                    player1.sendMessage(utilsGen.colorize("&7Vous venez de reçevoir une invitation pour rejoindre la guilde: &f" + guild1.getName()));
+                    main.getUtils().getUtilsMessage().inviteAccept(player1);
+                    main.getUtils().getUtilsMessage().inviteDeny(player1);
+
+                case "remove-guild":
+                    UUID uuid2 = UUID.fromString(in.readUTF()); //GUILD UUID
+                    if(main.getUtils().getUtilsGuild().guildByUUID.containsValue(uuid2)) {
+                        main.getUtils().getUtilsGuild().guildByUUID.remove(uuid2);
+                    }
             }
         }
     }

@@ -67,6 +67,8 @@ public class Guild {
         out.writeUTF(player.getUniqueId().toString());
 
         main.getServer().sendPluginMessage(main, "guild:channel", out.toByteArray());
+
+        //TODO
     }
 
     public void kickMembers(OfflinePlayer player) {
@@ -77,5 +79,7 @@ public class Guild {
         out.writeUTF(player.getUniqueId().toString());
 
         main.getServer().sendPluginMessage(main, "guild:channel", out.toByteArray());
+
+        //TODO
     }
 }

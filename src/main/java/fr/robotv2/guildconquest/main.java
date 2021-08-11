@@ -20,6 +20,7 @@ public final class main extends JavaPlugin {
         registerClasses();
         registerListeners();
         registerChannels();
+        registerCommands();
     }
 
     public void registerListeners() {

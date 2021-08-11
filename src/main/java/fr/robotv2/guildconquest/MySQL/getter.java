@@ -57,7 +57,9 @@ public class getter {
             PreparedStatement ps = main.getMySQl().getConnection().prepareStatement("SELECT GUILD FROM guild_assignations WHERE UUID=?");
             ps.setString(1, player.getUniqueId().toString());
             ResultSet rs = ps.executeQuery();
-            if(rs.next()) return UUID.fromString(rs.getString("GUILD"));
+            if(rs.next() && !rs.getString("GUILD").equalsIgnoreCase("null")) {
+                return UUID.fromString(rs.getString("GUILD"));
+            }
             return null;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -70,6 +72,17 @@ public class getter {
             PreparedStatement ps = main.getMySQl().getConnection().prepareStatement("UPDATE guild_assignations SET GUILD=? WHERE UUID=?");
             ps.setString(1, uuid.toString());
             ps.setString(2, player.getUniqueId().toString());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void clearGuild(UUID uuid) {
+        try {
+            PreparedStatement ps = main.getMySQl().getConnection().prepareStatement("UPDATE guild_assignations SET GUILD=? WHERE UUID=?");
+            ps.setString(1, "null");
+            ps.setString(2, uuid.toString());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

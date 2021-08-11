@@ -23,7 +23,7 @@ public class create {
         utilsGuild utils = main.getUtils().getUtilsGuild();
         String name = args[1];
 
-        if(player.hasPermission("guild.command.create")) {
+        if(!player.hasPermission("guild.command.create")) {
             player.sendMessage(utilsGen.colorize("&cVous n'avez pas la permission d'exécuter cette commande."));
             return;
         }

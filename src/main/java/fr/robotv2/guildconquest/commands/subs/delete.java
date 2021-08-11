@@ -24,7 +24,7 @@ public class delete {
         utilsGuild utils = main.getUtils().getUtilsGuild();
         Guild guild = utils.getGuild(player);
 
-        if(player.hasPermission("guild.command.delete")) {
+        if(!player.hasPermission("guild.command.delete")) {
             player.sendMessage(utilsGen.colorize("&cVous n'avez pas la permission d'exécuter cette commande."));
             return;
         }

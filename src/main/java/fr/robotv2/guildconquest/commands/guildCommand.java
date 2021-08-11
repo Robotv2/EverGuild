@@ -25,8 +25,8 @@ public class guildCommand implements CommandExecutor, TabCompleter {
 
         this.create = new create(main);
         this.delete = new delete(main);
-        this.invite = new invite();
-        this.kick = new kick();
+        this.invite = new invite(main);
+        this.kick = new kick(main);
         this.help = new help();
     }
 
