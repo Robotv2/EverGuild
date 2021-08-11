@@ -1,5 +1,7 @@
 package fr.robotv2.guildconquest;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import fr.robotv2.guildconquest.MySQL.sql;
 import fr.robotv2.guildconquest.commands.guildCommand;
 import fr.robotv2.guildconquest.listeners.joinEvent;
@@ -21,6 +23,8 @@ public final class main extends JavaPlugin {
         registerListeners();
         registerChannels();
         registerCommands();
+
+        askSqlCredentials();
     }
 
     public void registerListeners() {
@@ -50,5 +54,11 @@ public final class main extends JavaPlugin {
 
     public utilsManager getUtils() {
         return utilsManager;
+    }
+
+    public void askSqlCredentials() {
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("get-mysql");
+        getServer().sendPluginMessage(this, "guild:channel", out.toByteArray());
     }
 }

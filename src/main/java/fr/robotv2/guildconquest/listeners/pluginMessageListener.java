@@ -46,7 +46,17 @@ public class pluginMessageListener implements PluginMessageListener {
                     if(utilsGuild.guildByUUID.containsKey(uuid))
                         utilsGuild.guildByUUID.remove(uuid);
                     utilsGuild.guildByUUID.put(uuid, guild);
+                    return;
+                case "get-mysql":
+                    String host = in.readUTF();
+                    String port  = in.readUTF();
+                    String database = in.readUTF();
+                    String username = in.readUTF();
+                    String password = in.readUTF();
+                    String ssl = in.readUTF();
 
+                    main.getMySQl().initializeConnection(host, port, database, username, password, ssl);
+                    return;
                 case "invite-player":
                     UUID uuid1 = UUID.fromString(in.readUTF()); //GUILD UUID
                     Player player1 = Bukkit.getPlayer(UUID.fromString(in.readUTF())); //PLAYER UUID
@@ -57,11 +67,13 @@ public class pluginMessageListener implements PluginMessageListener {
                     player1.sendMessage(utilsGen.colorize("&7Vous venez de reçevoir une invitation pour rejoindre la guilde: &f" + guild1.getName()));
                     main.getUtils().getUtilsMessage().inviteAccept(player1);
                     main.getUtils().getUtilsMessage().inviteDeny(player1);
+                    return;
                 case "remove-guild":
                     UUID uuid2 = UUID.fromString(in.readUTF()); //GUILD UUID
                     if(main.getUtils().getUtilsGuild().guildByUUID.containsValue(uuid2)) {
                         main.getUtils().getUtilsGuild().guildByUUID.remove(uuid2);
                     }
+                    return;
             }
         }
     }

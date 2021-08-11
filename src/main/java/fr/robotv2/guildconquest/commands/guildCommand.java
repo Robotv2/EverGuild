@@ -35,7 +35,7 @@ public class guildCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if(args.length == 0) {
-            help.onHelp(sender, args);
+            this.help.onHelp(sender, args);
             return true;
         }
         switch(args[0].toLowerCase()) {
@@ -50,6 +50,12 @@ public class guildCommand implements CommandExecutor, TabCompleter {
                 return true;
             case "kick":
                 this.kick.onKick(sender, args);
+                return true;
+            case "accept":
+                this.accept.onAccept(sender, args);
+                return true;
+            case "deny":
+                this.deny.onDeny(sender, args);
                 return true;
             case "help":
                 this.help.onHelp(sender, args);
