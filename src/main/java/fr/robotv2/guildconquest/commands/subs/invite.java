@@ -24,7 +24,6 @@ public class invite {
 
         Player player = (Player) sender;
         utilsGuild utils = main.getUtils().getUtilsGuild();
-
         UUID guildUuid = main.getMySQl().getGetter().getGuildMysql(player);
         Guild guild = main.getUtils().getUtilsGuild().getGuild(guildUuid);
 

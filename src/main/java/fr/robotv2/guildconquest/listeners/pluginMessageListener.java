@@ -19,6 +19,11 @@ import java.util.UUID;
 
 public class pluginMessageListener implements PluginMessageListener {
 
+    //TO-USE
+    private Player player;
+    private UUID guildUUID;
+    private Guild guild;
+
     private main main;
     public pluginMessageListener(main main) {
         this.main = main;
@@ -27,12 +32,12 @@ public class pluginMessageListener implements PluginMessageListener {
     @Override
     public void onPluginMessageReceived(String channel, Player player, byte[] message) {
         if (channel.equalsIgnoreCase("guild:channel")) {
-            ByteArrayDataInput in = ByteStreams.newDataInput(message);
-            String sub = in.readUTF();
+            final ByteArrayDataInput in = ByteStreams.newDataInput(message);
+            final String sub = in.readUTF();
 
             switch (sub.toLowerCase()) {
                 case "get-credentials":
-                    UUID uuid = UUID.fromString(in.readUTF());
+                    guildUUID = UUID.fromString(in.readUTF());
                     String name = in.readUTF();
                     Double points = in.readDouble();
 
@@ -40,13 +45,14 @@ public class pluginMessageListener implements PluginMessageListener {
                     List<OfflinePlayer> officer = unformat(in.readUTF());
                     List<OfflinePlayer> membres = unformat(in.readUTF());
 
-                    Guild guild = new Guild(name, uuid, points, chef, officer, membres);
+                    Guild guild = new Guild(name, guildUUID, points, chef, officer, membres);
 
                     utilsGuild utilsGuild = main.getUtils().getUtilsGuild();
-                    if(utilsGuild.guildByUUID.containsKey(uuid))
-                        utilsGuild.guildByUUID.remove(uuid);
-                    utilsGuild.guildByUUID.put(uuid, guild);
+                    if(utilsGuild.guildByUUID.containsKey(guildUUID))
+                        utilsGuild.guildByUUID.remove(guildUUID);
+                    utilsGuild.guildByUUID.put(guildUUID, guild);
                     return;
+
                 case "get-mysql":
                     String host = in.readUTF();
                     String port  = in.readUTF();
@@ -57,21 +63,23 @@ public class pluginMessageListener implements PluginMessageListener {
 
                     main.getMySQl().initializeConnection(host, port, database, username, password, ssl);
                     return;
+
                 case "invite-player":
-                    UUID uuid1 = UUID.fromString(in.readUTF()); //GUILD UUID
-                    Player player1 = Bukkit.getPlayer(UUID.fromString(in.readUTF())); //PLAYER UUID
+                    guildUUID = UUID.fromString(in.readUTF()); //GUILD UUID
+                    player = Bukkit.getPlayer(UUID.fromString(in.readUTF())); //PLAYER UUID
 
-                    main.getUtils().getUtilsGuild().actualize(uuid1);
-                    Guild guild1 = main.getUtils().utilsGuild.getGuild(uuid1);
+                    main.getUtils().getUtilsGuild().actualize(guildUUID);
+                    Guild guild1 = main.getUtils().utilsGuild.getGuild(guildUUID);
 
-                    player1.sendMessage(utilsGen.colorize("&7Vous venez de reçevoir une invitation pour rejoindre la guilde: &f" + guild1.getName()));
-                    main.getUtils().getUtilsMessage().inviteAccept(player1);
-                    main.getUtils().getUtilsMessage().inviteDeny(player1);
+                    player.sendMessage(utilsGen.colorize("&7Vous venez de reçevoir une invitation pour rejoindre la guilde: &f" + guild1.getName()));
+                    main.getUtils().getUtilsMessage().inviteAccept(player);
+                    main.getUtils().getUtilsMessage().inviteDeny(player);
                     return;
+
                 case "remove-guild":
-                    UUID uuid2 = UUID.fromString(in.readUTF()); //GUILD UUID
-                    if(main.getUtils().getUtilsGuild().guildByUUID.containsValue(uuid2)) {
-                        main.getUtils().getUtilsGuild().guildByUUID.remove(uuid2);
+                    guildUUID = UUID.fromString(in.readUTF()); //GUILD UUID
+                    if(main.getUtils().getUtilsGuild().guildByUUID.containsValue(guildUUID)) {
+                        main.getUtils().getUtilsGuild().guildByUUID.remove(guildUUID);
                     }
                     return;
             }

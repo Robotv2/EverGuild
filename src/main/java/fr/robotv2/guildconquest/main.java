@@ -29,6 +29,7 @@ public final class main extends JavaPlugin {
 
     public void registerListeners() {
         PluginManager pm = Bukkit.getPluginManager();
+
         pm.registerEvents(new joinEvent(this), this);
     }
 

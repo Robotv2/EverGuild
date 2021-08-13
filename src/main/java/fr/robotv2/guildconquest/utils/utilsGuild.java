@@ -4,8 +4,6 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import fr.robotv2.guildconquest.main;
 import fr.robotv2.guildconquest.object.Guild;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -14,6 +12,7 @@ import java.util.UUID;
 public class utilsGuild {
 
     public HashMap<UUID, Guild> guildByUUID = new HashMap<>();
+    public HashMap<String, Boolean> result = new HashMap<>();
 
     private main main;
     public utilsGuild(main main) {
@@ -31,7 +30,6 @@ public class utilsGuild {
     //GUILD CREATOR
     public void createGuild(String name, Player player) {
         UUID uuid = UUID.randomUUID();
-
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
 
         out.writeUTF("create-guild");
@@ -52,7 +50,7 @@ public class utilsGuild {
         main.getServer().sendPluginMessage(main, "guild:channel", out.toByteArray());
     }
 
-    public void actualize(UUID uuid) {
+    public void  actualize(UUID uuid) {
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
 
         out.writeUTF("get-credentials");
@@ -82,6 +80,11 @@ public class utilsGuild {
         main.getServer().sendPluginMessage(main, "guild:channel", out.toByteArray());
     }
 
+    public boolean exist(String name) {
+        //TODO
+        return false;
+    }
+
     public boolean isChef (Guild guild, Player player) {
         return guild.getChef().equals(player);
     }
@@ -96,9 +99,5 @@ public class utilsGuild {
 
     public boolean isInGuild (Player player) {
         return main.getMySQl().getGetter().getGuildMysql(player) != null;
-    }
-
-    public boolean exist (String name) {
-        return false;
     }
 }
