@@ -1,11 +1,15 @@
 package fr.robotv2.guildconquest.object;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
+import fr.robotv2.guildconquest.main;
 
 import java.util.List;
 import java.util.UUID;
 
-public class guild {
+public class Guild {
 
     private String name;
     private UUID uuid;
@@ -14,7 +18,12 @@ public class guild {
     private List<OfflinePlayer> officier;
     private List<OfflinePlayer> membres;
 
-    public guild(String name, UUID uuid, Double points, OfflinePlayer chef, List<OfflinePlayer> officier, List<OfflinePlayer> membres) {
+    private main main;
+    public Guild(main main) {
+        this.main = main;
+    }
+
+    public Guild(String name, UUID uuid, Double points, OfflinePlayer chef, List<OfflinePlayer> officier, List<OfflinePlayer> membres) {
         this.name = name;
         this.uuid = uuid;
         this.points = points;
@@ -48,19 +57,5 @@ public class guild {
         return membres;
     }
 
-    private void setMembres(List<OfflinePlayer> membres) {
-        this.membres = membres;
-    }
-
-    public void addMembers(OfflinePlayer player, guild guild) {
-        List<OfflinePlayer> members = getMembres();
-        members.add(player);
-        setMembres(members);
-    }
-
-    public void kickMembers(OfflinePlayer player, guild guild) {
-        List<OfflinePlayer> members = getMembres();
-        members.remove(player);
-        setMembres(members);
-    }
+    public int getSize() { return getMembres().size(); }
 }

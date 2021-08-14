@@ -1,13 +1,14 @@
 package fr.robotv2.guildconquest.listeners;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
 import fr.robotv2.guildconquest.main;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import java.time.Instant;
 import java.util.UUID;
 
 public class joinEvent implements Listener {
@@ -20,14 +21,35 @@ public class joinEvent implements Listener {
     @EventHandler
     public void join(PlayerJoinEvent e) {
         Player player = e.getPlayer();
-        main.getMySQl().getGetter().createPlayer(player.getUniqueId());
+        Long delay = 0L;
 
-        UUID uuid = main.getMySQl().getGetter().getGuildMysql(player);
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        if(!main.getMySQl().isConnected()) {
+            delay = 20L;
+            startAutoTryConnect();
+        }
 
-        out.writeUTF("get-credentials");
-        out.writeUTF(uuid.toString());
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                main.getMySQl().getGetter().createPlayer(player.getUniqueId());
+                UUID uuid = main.getMySQl().getGetter().getGuildMysql(player);
 
-        player.sendPluginMessage(main, "guild:channel", out.toByteArray());
+                if(uuid != null)
+                    main.getUtils().getUtilsGuild().actualize(uuid);
+            }
+        }.runTaskLater(main, delay);
+    }
+
+    public void startAutoTryConnect() {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if(!main.getMySQl().isConnected())
+                    main.askSqlCredentials();
+                else {
+                    this.cancel();
+                }
+            }
+        }.runTaskTimer(main, 0, 10);
     }
 }

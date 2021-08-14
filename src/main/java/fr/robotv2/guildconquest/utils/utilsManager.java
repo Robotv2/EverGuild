@@ -5,12 +5,18 @@ import fr.robotv2.guildconquest.main;
 public class utilsManager {
 
     public utilsGuild utilsGuild;
+    public utilsMessage utilsMessage;
 
     public utilsManager(main main) {
         this.utilsGuild = new utilsGuild(main);
+        this.utilsMessage = new utilsMessage();
     }
 
     public utilsGuild getUtilsGuild() {
         return utilsGuild;
+    }
+
+    public utilsMessage getUtilsMessage() {
+        return utilsMessage;
     }
 }

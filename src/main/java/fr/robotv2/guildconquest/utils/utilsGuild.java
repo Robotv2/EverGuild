@@ -1,18 +1,18 @@
 package fr.robotv2.guildconquest.utils;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import fr.robotv2.guildconquest.main;
-import fr.robotv2.guildconquest.object.guild;
-import org.bukkit.OfflinePlayer;
+import fr.robotv2.guildconquest.object.Guild;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 public class utilsGuild {
 
-    public HashMap<UUID, guild> guildByUUID = new HashMap<>();
+    public HashMap<UUID, Guild> guildByUUID = new HashMap<>();
+    public HashMap<String, Boolean> result = new HashMap<>();
 
     private main main;
     public utilsGuild(main main) {
@@ -20,19 +20,94 @@ public class utilsGuild {
     }
 
     //GUILD FETCHER
-    public guild getGuild(Player player) { return getGuild(main.getMySQl().getGetter().getGuildMysql(player)); }
+    public Guild getGuild(Player player) { return getGuild(main.getMySQl().getGetter().getGuildMysql(player)); }
 
-    public guild getGuild(UUID uuid) {
+    public Guild getGuild(UUID uuid) {
+        if (uuid == null) return null;
         return guildByUUID.get(uuid);
     }
 
     //GUILD CREATOR
-    public guild createGuild(String name, Player player) {
+    public void createGuild(String name, Player player) {
         UUID uuid = UUID.randomUUID();
-        Double points = 0.0;
-        List<OfflinePlayer> result = new ArrayList<>();
-        result.add(player);
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
 
-        return new guild(name, uuid, points, player, null, result);
+        out.writeUTF("create-guild");
+        out.writeUTF(uuid.toString()); //GUILD UUID
+        out.writeUTF(name); //NOM
+        out.writeUTF(player.getUniqueId().toString()); //UUID DU CHEF
+
+        main.getLast().sendPluginMessage(main, main.channel, out.toByteArray());
+    }
+
+    //GUILD REMOVER
+    public void removeGuild(Guild guild) {
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+
+        out.writeUTF("remove-guild");
+        out.writeUTF(guild.getUuid().toString());
+
+        main.getLast().sendPluginMessage(main, main.channel, out.toByteArray());
+    }
+
+    public void  actualize(UUID uuid) {
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+
+        out.writeUTF("get-credentials");
+        out.writeUTF(uuid.toString());
+
+        main.getLast().sendPluginMessage(main, main.channel, out.toByteArray());
+    }
+
+    public void actualizeForOnly(UUID uuid, Player sender) {
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+
+        out.writeUTF("get-credentials-for-only");
+        out.writeUTF(uuid.toString());
+        out.writeUTF(sender.getUniqueId().toString());
+
+        main.getLast().sendPluginMessage(main, main.channel, out.toByteArray());
+    }
+
+    public void invitePlayer(Guild guild, String playerName, Player sender) {
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+
+        out.writeUTF("invite-player");
+        out.writeUTF(guild.getUuid().toString());
+        out.writeUTF(playerName);
+        out.writeUTF(sender.getUniqueId().toString());
+
+        sender.sendPluginMessage(main, main.channel, out.toByteArray());
+    }
+
+    public void kickPlayer(Guild guild, String playerUuidStr) {
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+
+        out.writeUTF("kick-player");
+        out.writeUTF(guild.getUuid().toString());
+        out.writeUTF(playerUuidStr);
+
+        main.getLast().sendPluginMessage(main, main.channel, out.toByteArray());
+    }
+
+    public boolean exist(String name) {
+        //TODO
+        return false;
+    }
+
+    public boolean isChef (Guild guild, Player player) {
+        return guild.getChef().equals(player);
+    }
+
+    public boolean isOfficier (Guild guild, Player player) {
+        return guild.getOfficier().contains(player);
+    }
+
+    public boolean isMembre (Guild guild, Player player) {
+        return guild.getMembres().contains(player);
+    }
+
+    public boolean isInGuild (Player player) {
+        return main.getMySQl().getGetter().getGuildMysql(player) != null;
     }
 }
