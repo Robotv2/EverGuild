@@ -1,10 +1,7 @@
 package fr.robotv2.guildconquest.object;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 import fr.robotv2.guildconquest.main;
+import org.bukkit.OfflinePlayer;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,6 +11,7 @@ public class Guild {
     private String name;
     private UUID uuid;
     private Double points;
+    private int level;
     private OfflinePlayer chef;
     private List<OfflinePlayer> officier;
     private List<OfflinePlayer> membres;
@@ -23,10 +21,11 @@ public class Guild {
         this.main = main;
     }
 
-    public Guild(String name, UUID uuid, Double points, OfflinePlayer chef, List<OfflinePlayer> officier, List<OfflinePlayer> membres) {
+    public Guild(String name, UUID uuid, Double points, int level, OfflinePlayer chef, List<OfflinePlayer> officier, List<OfflinePlayer> membres) {
         this.name = name;
         this.uuid = uuid;
         this.points = points;
+        this.level = level;
 
         this.chef = chef;
         this.officier = officier;
@@ -44,6 +43,8 @@ public class Guild {
     public Double getPoints() {
         return points;
     }
+
+    public int getLevel() { return level; }
 
     public OfflinePlayer getChef() {
         return chef;

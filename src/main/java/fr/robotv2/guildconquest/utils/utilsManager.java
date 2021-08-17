@@ -4,11 +4,14 @@ import fr.robotv2.guildconquest.main;
 
 public class utilsManager {
 
-    public utilsGuild utilsGuild;
-    public utilsMessage utilsMessage;
+    private utilsGuild utilsGuild;
+    private utilsMessage utilsMessage;
+    private utilsCache utilsCache;
 
     public utilsManager(main main) {
         this.utilsGuild = new utilsGuild(main);
+        this.utilsMessage = new utilsMessage();
+        this.utilsCache = new utilsCache(main);
     }
 
     public utilsGuild getUtilsGuild() {
@@ -17,5 +20,9 @@ public class utilsManager {
 
     public utilsMessage getUtilsMessage() {
         return utilsMessage;
+    }
+
+    public utilsCache getCache() {
+        return utilsCache;
     }
 }

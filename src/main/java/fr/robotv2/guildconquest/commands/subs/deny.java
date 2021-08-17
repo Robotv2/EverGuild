@@ -32,6 +32,6 @@ public class deny {
         out.writeUTF("deny-player");
         out.writeUTF(player.getUniqueId().toString());
 
-        main.getServer().sendPluginMessage(main, "guild:channel", out.toByteArray());
+        main.getServer().sendPluginMessage(main, main.channel, out.toByteArray());
     }
 }

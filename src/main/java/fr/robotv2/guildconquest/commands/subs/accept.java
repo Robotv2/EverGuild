@@ -7,6 +7,7 @@ import fr.robotv2.guildconquest.utils.utilsGen;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+
 public class accept {
     private main main;
     public accept(main main) {
@@ -31,6 +32,6 @@ public class accept {
         out.writeUTF("accept-player");
         out.writeUTF(player.getUniqueId().toString());
 
-        main.getServer().sendPluginMessage(main, "guild:channel", out.toByteArray());
+        main.getServer().sendPluginMessage(main, main.channel, out.toByteArray());
     }
 }

@@ -7,20 +7,15 @@ import fr.robotv2.guildconquest.utils.utilsGuild;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class invite {
-
+public class leave {
     private main main;
-    public invite(main main) {
+    public leave(main main) {
         this.main = main;
     }
 
-    public void onInvite(CommandSender sender, String[] args) {
+    public void onLeave(CommandSender sender, String[] args) {
         if(!utilsGen.isPlayer(sender)) {
             sender.sendMessage(utilsGen.colorize("&cCette commande ne peut pas être exécutée depuis la console."));
-            return;
-        }
-        if(args.length < 2) {
-            sender.sendMessage(utilsGen.colorize("&cUSAGE: /guild invite <joueur>"));
             return;
         }
 
@@ -28,7 +23,7 @@ public class invite {
         utilsGuild utils = main.getUtils().getUtilsGuild();
         Guild guild = utils.getGuild(player);
 
-        if(!player.hasPermission("guild.command.invite")) {
+        if(!player.hasPermission("guild.command.leave")) {
             player.sendMessage(utilsGen.colorize("&cVous n'avez pas la permission d'exécuter cette commande."));
             return;
         }
@@ -36,14 +31,12 @@ public class invite {
             player.sendMessage(utilsGen.colorize("&cVous n'êtes dans aucune guilde."));
             return;
         }
-        if(!utils.isChef(guild, player) && !utils.isOfficier(guild, player)) {
-            player.sendMessage(utilsGen.colorize("&cVous devez être au minimum officier de la guilde pour faire cette commande."));
+        if(utils.isChef(guild, player)) {
+            player.sendMessage(utilsGen.colorize("&cVous ne pouvez quitter la guilde car vous êtes le chef."));
+            player.sendMessage(utilsGen.colorize("&cSi vous voulez supprimer la guilde: /guild delete."));
             return;
         }
-        if(args[1].equalsIgnoreCase(player.getName())) {
-            player.sendMessage(utilsGen.colorize("&cVous ne pouvez pas vous inviter."));
-            return;
-        }
-        utils.invitePlayer(guild, args[1], player);
+
+        utils.leaveGuild(player, guild);
     }
 }

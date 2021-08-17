@@ -18,6 +18,10 @@ public class create {
             sender.sendMessage(utilsGen.colorize("&cCette commande ne peut pas être exécutée depuis la console."));
             return;
         }
+        if(args.length < 2) {
+            sender.sendMessage(utilsGen.colorize("&cUSAGE: /guild create <nom>."));
+            return;
+        }
 
         Player player = (Player) sender;
         utilsGuild utils = main.getUtils().getUtilsGuild();
@@ -29,10 +33,6 @@ public class create {
         }
         if(utils.isInGuild(player))  {
             player.sendMessage(utilsGen.colorize("&cVous êtes déjà dans une guilde."));
-            return;
-        }
-        if(utils.exist(name)) {
-            player.sendMessage(utilsGen.colorize("&cVous ne pouvez pas créer de guilde car ce nom est déjà pris."));
             return;
         }
 

@@ -11,7 +11,7 @@ public class sql {
     private main main;
     private Connection connection;
 
-    public getter getter;
+    private getter getter;
 
     public String host;
     public String port;
