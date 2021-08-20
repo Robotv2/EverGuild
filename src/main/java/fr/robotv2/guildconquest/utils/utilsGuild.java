@@ -76,7 +76,7 @@ public class utilsGuild {
         out.writeUTF(uuid.toString());
         out.writeUTF(sender.getUniqueId().toString());
 
-        main.getLast().sendPluginMessage(main, main.channel, out.toByteArray());
+        sender.sendPluginMessage(main, main.channel, out.toByteArray());
     }
 
     public void invitePlayer(Guild guild, String playerName, Player sender) {

@@ -7,11 +7,13 @@ public class utilsManager {
     private utilsGuild utilsGuild;
     private utilsMessage utilsMessage;
     private utilsCache utilsCache;
+    private utilsTop utilsTop;
 
     public utilsManager(main main) {
         this.utilsGuild = new utilsGuild(main);
         this.utilsMessage = new utilsMessage();
         this.utilsCache = new utilsCache(main);
+        this.utilsTop = new utilsTop(main);
     }
 
     public utilsGuild getUtilsGuild() {
@@ -25,4 +27,6 @@ public class utilsManager {
     public utilsCache getCache() {
         return utilsCache;
     }
+
+    public utilsTop getTopUtils() { return utilsTop; }
 }

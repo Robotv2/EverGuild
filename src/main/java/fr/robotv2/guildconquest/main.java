@@ -17,6 +17,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.NoSuchElementException;
+
 public final class main extends JavaPlugin {
 
     public sql sql;
@@ -79,6 +81,10 @@ public final class main extends JavaPlugin {
     }
 
     public Player getLast() {
-        return Iterables.getLast(Bukkit.getOnlinePlayers());
+        try {
+            return Iterables.getLast(Bukkit.getOnlinePlayers());
+        } catch (NoSuchElementException e) {
+            return null;
+        }
     }
 }

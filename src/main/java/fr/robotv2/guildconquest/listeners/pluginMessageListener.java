@@ -6,6 +6,7 @@ import fr.robotv2.guildconquest.main;
 import fr.robotv2.guildconquest.object.Guild;
 import fr.robotv2.guildconquest.utils.utilsGen;
 import fr.robotv2.guildconquest.utils.utilsGuild;
+import fr.robotv2.guildconquest.utils.utilsTop;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -119,6 +120,13 @@ public class pluginMessageListener implements PluginMessageListener {
                 case "clear-cache":
                     playerUUID = UUID.fromString(in.readUTF()); //PLAYER-UUID
                     main.getUtils().getCache().clearCache(playerUUID);
+                    return;
+
+                case "set-top":
+                    int position = in.readInt();
+                    guildUUID = UUID.fromString(in.readUTF());
+                    utilsTop.topType type = (in.readUTF().equalsIgnoreCase("level") ? utilsTop.topType.LEVEL : utilsTop.topType.POINTS);
+                    main.getUtils().getTopUtils().setTop(position, guildUUID, type);
                     return;
             }
         }

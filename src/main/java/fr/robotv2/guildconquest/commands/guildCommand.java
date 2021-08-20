@@ -11,31 +11,27 @@ import java.util.List;
 
 public class guildCommand implements CommandExecutor, TabCompleter {
 
-    private main main;
+    private final create create;
+    private final delete delete;
 
-    private create create;
-    private delete delete;
+    private final invite invite;
+    private final kick kick;
 
-    private invite invite;
-    private kick kick;
+    private final accept accept;
+    private final deny deny;
 
-    private accept accept;
-    private deny deny;
+    private final help help;
+    private final chat chat;
+    private final info info;
 
-    private help help;
-    private chat chat;
-    private info info;
+    private final sethome sethome;
+    private final home home;
 
-    private sethome sethome;
-    private home home;
-
-    private leave leave;
-    private changename changename;
-    private promote promote;
-    private demote demote;
+    private final leave leave;
+    private final changename changename;
+    private final promote promote;
+    private final demote demote;
     public guildCommand(main main) {
-        this.main = main;
-
         this.create = new create(main);
         this.delete = new delete(main);
         this.invite = new invite(main);
@@ -99,6 +95,8 @@ public class guildCommand implements CommandExecutor, TabCompleter {
             case "demote":
                 this.demote.onDemote(sender, args);
                 return true;
+            case "changename":
+                this.changename.onChangeName(sender, args);
             case "help":
                 this.help.onHelp(sender, args);
                 return true;
