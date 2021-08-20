@@ -30,6 +30,7 @@ public class guildCommand implements CommandExecutor, TabCompleter {
     private home home;
 
     private leave leave;
+    private changename changename;
     private promote promote;
     private demote demote;
     public guildCommand(main main) {
@@ -48,6 +49,7 @@ public class guildCommand implements CommandExecutor, TabCompleter {
         this.chat = new chat(main);
         this.promote = new promote(main);
         this.demote = new demote(main);
+        this.changename = new changename(main);
         this.help = new help();
     }
 

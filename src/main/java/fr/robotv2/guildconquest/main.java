@@ -3,7 +3,7 @@ package fr.robotv2.guildconquest;
 import com.google.common.collect.Iterables;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import fr.robotv2.guildconquest.MySQL.sql;
+import fr.robotv2.guildconquest.mysql.sql;
 import fr.robotv2.guildconquest.commands.guildCommand;
 import fr.robotv2.guildconquest.listeners.chatEvent;
 import fr.robotv2.guildconquest.listeners.joinEvent;
@@ -38,14 +38,14 @@ public final class main extends JavaPlugin {
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new joinEvent(this), this);
         pm.registerEvents(new quitEvent(this), this);
-        pm.registerEvents(new chatEvent(this, getUtils().getUtilsGuild()), this);
+        pm.registerEvents(new chatEvent(this), this);
     }
 
     public void registerClasses() {
         sql = new sql(this);
         utilsManager = new utilsManager(this);
         new Guild(this);
-        new placeholder(this, getUtils().getUtilsGuild()).register();
+        new placeholder(this).register();
     }
 
     public void registerChannels() {

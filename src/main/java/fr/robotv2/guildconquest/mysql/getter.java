@@ -1,9 +1,8 @@
-package fr.robotv2.guildconquest.MySQL;
+package fr.robotv2.guildconquest.mysql;
 
 import fr.robotv2.guildconquest.main;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -57,14 +56,14 @@ public class getter {
     }
 
     public UUID getGuildMysql(OfflinePlayer player) {
+        ResultSet rs = null;
         try {
             PreparedStatement ps = main.getMySQl().getConnection().prepareStatement("SELECT GUILD FROM guild_assignations WHERE UUID=?");
             ps.setString(1, player.getUniqueId().toString());
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             if(rs.next() && !rs.getString("GUILD").equalsIgnoreCase("null")) {
                 return UUID.fromString(rs.getString("GUILD"));
             }
-            return null;
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -10,9 +10,9 @@ public class placeholder extends PlaceholderExpansion {
 
     private main main;
     private utilsGuild utils;
-    public placeholder(main main, utilsGuild utilsGuild) {
+    public placeholder(main main) {
         this.main = main;
-        this.utils = utilsGuild;
+        this.utils = main.getUtils().getUtilsGuild();
     }
 
     @Override

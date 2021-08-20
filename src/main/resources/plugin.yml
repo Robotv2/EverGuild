@@ -1,4 +1,4 @@
-name: GuildConquest
+name: EverGuild
 version: ${project.version}
 main: fr.robotv2.guildconquest.main
 api-version: 1.16

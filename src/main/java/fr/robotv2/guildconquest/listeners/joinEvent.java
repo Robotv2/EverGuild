@@ -1,6 +1,8 @@
 package fr.robotv2.guildconquest.listeners;
 
 import fr.robotv2.guildconquest.main;
+import fr.robotv2.guildconquest.utils.utilsGuild;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,8 +15,10 @@ import java.util.UUID;
 public class joinEvent implements Listener {
 
     private main main;
+    private utilsGuild utils;
     public joinEvent(main main) {
         this.main = main;
+        this.utils = main.getUtils().getUtilsGuild();
     }
 
     @EventHandler
@@ -27,20 +31,19 @@ public class joinEvent implements Listener {
             autoReconnect();
         }
 
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                main.getMySQl().getGetter().createPlayer(player.getUniqueId());
-                UUID guildUUID = main.getMySQl().getGetter().getGuildMysql(player);
+        Bukkit.getScheduler().runTaskLater(main, () -> {
+            main.getMySQl().getGetter().createPlayer(player.getUniqueId());
+            UUID guildUUID = main.getMySQl().getGetter().getGuildMysql(player);
 
-                if(guildUUID != null) {
-                    main.getUtils().getUtilsGuild().actualize(guildUUID);
-                    main.getUtils().getCache().setCache(player, guildUUID);
-                }
-
-                teleportPlayer(player);
+            if(guildUUID != null) {
+                utils.actualize(guildUUID);
+                main.getUtils().getCache().setCache(player, guildUUID);
+                utils.sendMessageToAllGuild(utils.getGuild(guildUUID), "§7Le joueur §e"
+                        + player.getName() + " §7vient de se connecter.", false);
             }
-        }.runTaskLater(main, delay);
+
+            teleportPlayer(player);
+        }, delay);
     }
 
     public void autoReconnect() {

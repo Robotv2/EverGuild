@@ -1,4 +1,4 @@
-package fr.robotv2.guildconquest.MySQL;
+package fr.robotv2.guildconquest.mysql;
 
 import fr.robotv2.guildconquest.main;
 

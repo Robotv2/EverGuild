@@ -50,7 +50,7 @@ public class pluginMessageListener implements PluginMessageListener {
 
                     Guild guild = new Guild(name, guildUUID, points, level, chef, officer, membres);
 
-                    main.sendDebug("Information d'un nouveau clan reçu: &6" + guild.getName() + " &8(&f" + guild.getUuid().toString() + "&8)");
+                    main.sendDebug("&7Information d'un nouveau clan reçu: &6" + guild.getName() + " &8(&f" + guild.getUuid().toString() + "&8)");
 
                     utilsGuild utils = main.getUtils().getUtilsGuild();
                     if(utils.guildByUUID.containsKey(guildUUID))
@@ -107,6 +107,7 @@ public class pluginMessageListener implements PluginMessageListener {
                         main.getUtils().getUtilsGuild().guildHome.put(playerUUID, home);
                     }
                     return;
+
                 case "set-cache":
                     playerUUID = UUID.fromString(in.readUTF());
                     player = Bukkit.getPlayer(playerUUID);
@@ -114,6 +115,7 @@ public class pluginMessageListener implements PluginMessageListener {
 
                     main.getUtils().getCache().setCache(player, guildUUID);
                     return;
+
                 case "clear-cache":
                     playerUUID = UUID.fromString(in.readUTF()); //PLAYER-UUID
                     main.getUtils().getCache().clearCache(playerUUID);

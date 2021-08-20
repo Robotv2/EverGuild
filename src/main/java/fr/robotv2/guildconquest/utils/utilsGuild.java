@@ -177,6 +177,24 @@ public class utilsGuild {
         main.getLast().sendPluginMessage(main, main.channel, out.toByteArray());
     }
 
+    public void changeName(UUID guildUUID, UUID playerUUID, String newName) {
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+
+        out.writeUTF("change-name");
+        out.writeUTF(guildUUID.toString());
+        out.writeUTF(playerUUID.toString());
+        out.writeUTF(newName);
+
+        main.getLast().sendPluginMessage(main, main.channel, out.toByteArray());
+    }
+
+    public String getRankStr(Player player, Guild guild) {
+        if(isChef(guild, player)) return "&cCHEF";
+        if(isOfficier(guild, player)) return "&eOFFICIER";
+        if(isMembre(guild, player)) return "&7MEMBRE";
+        return "&8INVITE";
+    }
+
     public boolean isChef (Guild guild, Player player) {
         return guild.getChef().equals(player);
     }

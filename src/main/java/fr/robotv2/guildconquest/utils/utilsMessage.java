@@ -10,7 +10,8 @@ public class utilsMessage {
 
         public void inviteAccept(Player player) {
             TextComponent text = new TextComponent("§7Cliquez ici pour §aaccepter §7l'invitation.");
-            text.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7Cliquez ici pour §aaccepter §7l'invitation.")
+            text.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                    new ComponentBuilder("§7Cliquez ici pour §aaccepter §7l'invitation.")
                     .create()));
             text.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/guild accept"));
             player.spigot().sendMessage(text);
@@ -18,7 +19,8 @@ public class utilsMessage {
 
         public void inviteDeny(Player player) {
             TextComponent text = new TextComponent("§7Cliquez ici pour §crefuser §7l'invitation.");
-            text.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7Cliquez ici pour §crefuser §7l'invitation.")
+            text.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                    new ComponentBuilder("§7Cliquez ici pour §crefuser §7l'invitation.")
                     .create()));
             text.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/guild deny"));
             player.spigot().sendMessage(text);
