@@ -6,36 +6,31 @@ import fr.robotv2.guildconquest.utils.utilsGuild;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class create {
+public class confirm {
 
     private main main;
-    public create(main main) {
+    public confirm(main main) {
         this.main = main;
     }
 
-    public void onCreate(CommandSender sender, String[] args) {
+    public void onConfirm(CommandSender sender, String[] args) {
         if(!utilsGen.isPlayer(sender)) {
             sender.sendMessage(utilsGen.colorize("&cCette commande ne peut pas être exécutée depuis la console."));
-            return;
-        }
-        if(args.length < 2) {
-            sender.sendMessage(utilsGen.colorize("&cUSAGE: /guild create <nom>."));
             return;
         }
 
         Player player = (Player) sender;
         utilsGuild utils = main.getUtils().getUtilsGuild();
-        String name = args[1];
 
-        if(!player.hasPermission("guild.command.create")) {
+        if(!player.hasPermission("guild.command.confirm")) {
             player.sendMessage(utilsGen.colorize("&cVous n'avez pas la permission d'exécuter cette commande."));
             return;
         }
-        if(utils.isInGuild(player))  {
-            player.sendMessage(utilsGen.colorize("&cVous êtes déjà dans une guilde."));
+        if(!main.getUtils().getConfirm().hasConfirmed(player)) {
+            player.sendMessage(utilsGen.colorize("&cVous n'avez aucune action à confirmer."));
             return;
         }
 
-        utils.createGuild(name, player);
+        main.getUtils().getConfirm().execute(player);
     }
 }

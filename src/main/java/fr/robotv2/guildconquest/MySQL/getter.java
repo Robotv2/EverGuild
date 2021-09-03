@@ -1,7 +1,8 @@
-package fr.robotv2.guildconquest.MySQL;
+package fr.robotv2.guildconquest.mysql;
 
 import fr.robotv2.guildconquest.main;
-import org.bukkit.entity.Player;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,17 +28,19 @@ public class getter {
     }
 
     public void createPlayer(UUID uuid) {
-        try {
-            if (!this.exists(uuid)) {
-                PreparedStatement ps = main.getMySQl().getConnection().prepareStatement("INSERT IGNORE INTO guild_assignations"
-                        + " (UUID,GUILD) VALUES (?,?)");
-                ps.setString(1, uuid.toString());
-                ps.setString(2, "null");
-                ps.executeUpdate();
+        Bukkit.getScheduler().runTaskAsynchronously(main, () -> {
+            try {
+                if (!this.exists(uuid)) {
+                    PreparedStatement ps = main.getMySQl().getConnection().prepareStatement("INSERT IGNORE INTO guild_assignations"
+                            + " (UUID,GUILD) VALUES (?,?)");
+                    ps.setString(1, uuid.toString());
+                    ps.setString(2, "null");
+                    ps.executeUpdate();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        });
     }
 
     public boolean exists(UUID uuid) {
@@ -52,40 +55,44 @@ public class getter {
         return false;
     }
 
-    public UUID getGuildMysql(Player player) {
+    public UUID getGuildMysql(OfflinePlayer player) {
+        ResultSet rs = null;
         try {
             PreparedStatement ps = main.getMySQl().getConnection().prepareStatement("SELECT GUILD FROM guild_assignations WHERE UUID=?");
             ps.setString(1, player.getUniqueId().toString());
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             if(rs.next() && !rs.getString("GUILD").equalsIgnoreCase("null")) {
                 return UUID.fromString(rs.getString("GUILD"));
             }
-            return null;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public void setGuild(UUID uuid, Player player) {
-        try {
-            PreparedStatement ps = main.getMySQl().getConnection().prepareStatement("UPDATE guild_assignations SET GUILD=? WHERE UUID=?");
-            ps.setString(1, uuid.toString());
-            ps.setString(2, player.getUniqueId().toString());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void setGuild(UUID uuid, OfflinePlayer player) {
+        Bukkit.getScheduler().runTaskAsynchronously(main, () -> {
+            try {
+                PreparedStatement ps = main.getMySQl().getConnection().prepareStatement("UPDATE guild_assignations SET GUILD=? WHERE UUID=?");
+                ps.setString(1, uuid.toString());
+                ps.setString(2, player.getUniqueId().toString());
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public void clearGuild(UUID uuid) {
-        try {
-            PreparedStatement ps = main.getMySQl().getConnection().prepareStatement("UPDATE guild_assignations SET GUILD=? WHERE UUID=?");
-            ps.setString(1, "null");
-            ps.setString(2, uuid.toString());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Bukkit.getScheduler().runTaskAsynchronously(main, () -> {
+            try {
+                PreparedStatement ps = main.getMySQl().getConnection().prepareStatement("UPDATE guild_assignations SET GUILD=? WHERE UUID=?");
+                ps.setString(1, "null");
+                ps.setString(2, uuid.toString());
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

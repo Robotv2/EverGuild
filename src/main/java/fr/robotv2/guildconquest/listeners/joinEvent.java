@@ -1,46 +1,32 @@
 package fr.robotv2.guildconquest.listeners;
 
 import fr.robotv2.guildconquest.main;
-import org.bukkit.Bukkit;
+import fr.robotv2.guildconquest.utils.utilsGuild;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.time.Instant;
-import java.util.UUID;
-
 public class joinEvent implements Listener {
 
     private main main;
+    private utilsGuild utils;
     public joinEvent(main main) {
         this.main = main;
+        this.utils = main.getUtils().getUtilsGuild();
     }
 
     @EventHandler
     public void join(PlayerJoinEvent e) {
         Player player = e.getPlayer();
-        Long delay = 0L;
 
-        if(!main.getMySQl().isConnected()) {
-            delay = 20L;
-            startAutoTryConnect();
-        }
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                main.getMySQl().getGetter().createPlayer(player.getUniqueId());
-                UUID uuid = main.getMySQl().getGetter().getGuildMysql(player);
-
-                if(uuid != null)
-                    main.getUtils().getUtilsGuild().actualize(uuid);
-            }
-        }.runTaskLater(main, delay);
+        if(!main.getMySQl().isConnected()) autoReconnect();
+        teleportPlayer(player);
     }
 
-    public void startAutoTryConnect() {
+    public void autoReconnect() {
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -51,5 +37,12 @@ public class joinEvent implements Listener {
                 }
             }
         }.runTaskTimer(main, 0, 10);
+    }
+
+    public void teleportPlayer(Player player) {
+        if(main.getUtils().getUtilsGuild().guildHome.containsKey(player.getUniqueId())) {
+            Location home = main.getUtils().getUtilsGuild().guildHome.get(player.getUniqueId());
+            player.teleport(home);
+        }
     }
 }

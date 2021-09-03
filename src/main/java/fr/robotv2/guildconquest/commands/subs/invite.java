@@ -7,8 +7,6 @@ import fr.robotv2.guildconquest.utils.utilsGuild;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.UUID;
-
 public class invite {
 
     private main main;
@@ -28,8 +26,7 @@ public class invite {
 
         Player player = (Player) sender;
         utilsGuild utils = main.getUtils().getUtilsGuild();
-        UUID guildUuid = main.getMySQl().getGetter().getGuildMysql(player);
-        Guild guild = main.getUtils().getUtilsGuild().getGuild(guildUuid);
+        Guild guild = utils.getGuild(player);
 
         if(!player.hasPermission("guild.command.invite")) {
             player.sendMessage(utilsGen.colorize("&cVous n'avez pas la permission d'exécuter cette commande."));
@@ -41,6 +38,10 @@ public class invite {
         }
         if(!utils.isChef(guild, player) && !utils.isOfficier(guild, player)) {
             player.sendMessage(utilsGen.colorize("&cVous devez être au minimum officier de la guilde pour faire cette commande."));
+            return;
+        }
+        if(args[1].equalsIgnoreCase(player.getName())) {
+            player.sendMessage(utilsGen.colorize("&cVous ne pouvez pas vous inviter."));
             return;
         }
         utils.invitePlayer(guild, args[1], player);

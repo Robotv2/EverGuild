@@ -9,8 +9,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.UUID;
-
 public class kick {
 
     private main main;
@@ -26,9 +24,7 @@ public class kick {
 
         Player player = (Player) sender;
         utilsGuild utils = main.getUtils().getUtilsGuild();
-
-        UUID guildUuid = main.getMySQl().getGetter().getGuildMysql(player);
-        Guild guild = main.getUtils().getUtilsGuild().getGuild(guildUuid);
+        Guild guild = utils.getGuild(player);
 
         if(!player.hasPermission("guild.command.kick")) {
             player.sendMessage(utilsGen.colorize("&cVous n'avez pas la permission d'exécuter cette commande."));
@@ -52,13 +48,16 @@ public class kick {
         }
 
         OfflinePlayer OFplayer = Bukkit.getOfflinePlayer(args[1]);
-        main.sendDebug(OFplayer.getUniqueId().toString());
-        main.sendDebug(guild.getMembres().toString());
-
         if(!guild.getMembres().contains(OFplayer)) {
             player.sendMessage(utilsGen.colorize("&cCe joueur n'est pas dans votre guilde."));
             return;
         }
-        utils.kickPlayer(guild, OFplayer.getUniqueId().toString());
+
+        if(!main.getUtils().getConfirm().hasConfirmed(player)) {
+            main.getUtils().getConfirm().addConfirm(player, args);
+            main.getUtils().getUtilsMessage().sendConfirmation(player);
+            return;
+        }
+        utils.kickPlayer(guild, OFplayer.getUniqueId());
     }
 }

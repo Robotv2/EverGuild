@@ -32,6 +32,6 @@ public class accept {
         out.writeUTF("accept-player");
         out.writeUTF(player.getUniqueId().toString());
 
-        main.getServer().sendPluginMessage(main, main.channel, out.toByteArray());
+        main.getLast().sendPluginMessage(main, main.channel, out.toByteArray());
     }
 }

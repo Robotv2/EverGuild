@@ -28,12 +28,17 @@ public class delete {
             player.sendMessage(utilsGen.colorize("&cVous n'avez pas la permission d'exécuter cette commande."));
             return;
         }
-        if(!utils.isInGuild(player))  {
+        if(guild == null)  {
             player.sendMessage(utilsGen.colorize("&cVous n'êtes dans aucune guilde."));
             return;
         }
         if(!utils.isChef(guild, player)) {
             player.sendMessage(utilsGen.colorize("&cVous devez être chef de la guilde pour pouvoir faire cette commande."));
+            return;
+        }
+        if(!main.getUtils().getConfirm().hasConfirmed(player)) {
+            main.getUtils().getConfirm().addConfirm(player, args);
+            main.getUtils().getUtilsMessage().sendConfirmation(player);
             return;
         }
 

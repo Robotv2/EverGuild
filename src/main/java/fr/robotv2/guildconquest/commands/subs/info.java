@@ -1,15 +1,11 @@
 package fr.robotv2.guildconquest.commands.subs;
 
 import fr.robotv2.guildconquest.main;
-import fr.robotv2.guildconquest.utils.utilsGuild;
-import fr.robotv2.guildconquest.utils.utilsGen;
 import fr.robotv2.guildconquest.object.Guild;
-
-import org.bukkit.Bukkit;
+import fr.robotv2.guildconquest.utils.utilsGen;
+import fr.robotv2.guildconquest.utils.utilsGuild;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.UUID;
 
 public class info {
 
@@ -26,14 +22,13 @@ public class info {
 
         Player player = (Player) sender;
         utilsGuild utils = main.getUtils().getUtilsGuild();
-        UUID playerUUID = main.getMySQl().getGetter().getGuildMysql(player);
-        Guild guild = main.getUtils().utilsGuild.getGuild(playerUUID);
+        Guild guild = utils.getGuild(player);
 
         if(!player.hasPermission("guild.command.info")) {
             player.sendMessage(utilsGen.colorize("&cVous n'avez pas la permission d'exécuter cette commande."));
             return;
         }
-        if(playerUUID == null) {
+        if(guild == null) {
             player.sendMessage(utilsGen.colorize("&cVous n'êtes dans aucune guilde."));
             return;
         }

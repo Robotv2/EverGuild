@@ -1,4 +1,4 @@
-package fr.robotv2.guildconquest.MySQL;
+package fr.robotv2.guildconquest.mysql;
 
 import fr.robotv2.guildconquest.main;
 
@@ -8,10 +8,10 @@ import java.sql.SQLException;
 
 public class sql {
 
-    private main main;
+    private final fr.robotv2.guildconquest.main main;
     private Connection connection;
 
-    private getter getter;
+    private final getter getter;
 
     public String host;
     public String port;
