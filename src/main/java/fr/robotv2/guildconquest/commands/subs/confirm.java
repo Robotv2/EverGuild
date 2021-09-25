@@ -23,11 +23,11 @@ public class confirm {
         utilsGuild utils = main.getUtils().getUtilsGuild();
 
         if(!player.hasPermission("guild.command.confirm")) {
-            player.sendMessage(utilsGen.colorize("&cVous n'avez pas la permission d'exécuter cette commande."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous n'avez pas la permission d'exécuter cette commande."));
             return;
         }
         if(!main.getUtils().getConfirm().hasConfirmed(player)) {
-            player.sendMessage(utilsGen.colorize("&cVous n'avez aucune action à confirmer."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous n'avez aucune action à confirmer."));
             return;
         }
 

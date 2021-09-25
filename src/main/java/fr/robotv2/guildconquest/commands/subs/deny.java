@@ -23,7 +23,7 @@ public class deny {
         Player player = (Player) sender;
 
         if(!player.hasPermission("guild.command.deny")) {
-            player.sendMessage(utilsGen.colorize("&cVous n'avez pas la permission d'exécuter cette commande."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous n'avez pas la permission d'exécuter cette commande."));
             return;
         }
 

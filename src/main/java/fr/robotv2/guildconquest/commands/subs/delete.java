@@ -25,15 +25,15 @@ public class delete {
         Guild guild = utils.getGuild(player);
 
         if(!player.hasPermission("guild.command.delete")) {
-            player.sendMessage(utilsGen.colorize("&cVous n'avez pas la permission d'exécuter cette commande."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous n'avez pas la permission d'exécuter cette commande."));
             return;
         }
         if(guild == null)  {
-            player.sendMessage(utilsGen.colorize("&cVous n'êtes dans aucune guilde."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous n'êtes dans aucune guilde."));
             return;
         }
         if(!utils.isChef(guild, player)) {
-            player.sendMessage(utilsGen.colorize("&cVous devez être chef de la guilde pour pouvoir faire cette commande."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous devez être chef de la guilde pour pouvoir faire cette commande."));
             return;
         }
         if(!main.getUtils().getConfirm().hasConfirmed(player)) {
@@ -43,6 +43,6 @@ public class delete {
         }
 
         utils.removeGuild(guild);
-        player.sendMessage(utilsGen.colorize("&7Vous venez de supprimer votre guilde."));
+        player.sendMessage(utilsGen.colorize(main.prefix + "&7Vous venez de supprimer votre guilde."));
     }
 }

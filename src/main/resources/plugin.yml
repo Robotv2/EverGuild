@@ -8,6 +8,11 @@ softdepend:
   - PlaceholderAPI
   - Multiverse-Core
   - WorldGuardEvents
+  - Citizens
+  - WorldGuard
+  - WorldEdit
+  - MythicMobs
+  - ProtocolLib
 commands:
   guild:
     description: main plugin command

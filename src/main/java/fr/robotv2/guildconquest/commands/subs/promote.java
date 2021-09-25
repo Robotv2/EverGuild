@@ -27,15 +27,15 @@ public class promote {
 
 
         if(!player.hasPermission("guild.command.promote")) {
-            player.sendMessage(utilsGen.colorize("&cVous n'avez pas la permission d'exécuter cette commande."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous n'avez pas la permission d'exécuter cette commande."));
             return;
         }
         if(guild == null)  {
-            player.sendMessage(utilsGen.colorize("&cVous n'êtes dans aucune guilde."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous n'êtes dans aucune guilde."));
             return;
         }
         if(!utils.isChef(guild, player)) {
-            player.sendMessage(utilsGen.colorize("&cVous devez être chef de la guilde pour pouvoir faire cette commande."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous devez être chef de la guilde pour pouvoir faire cette commande."));
             return;
         }
         if(args.length < 2) {
@@ -44,18 +44,18 @@ public class promote {
         }
         String name = args[1];
         if(player.getName().equalsIgnoreCase(name)) {
-            player.sendMessage(utilsGen.colorize("&cVous ne pouvez pas vous promouvoir."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous ne pouvez pas vous promouvoir."));
             return;
         }
         OfflinePlayer OFplayer = Bukkit.getOfflinePlayer(name);
         if(!guild.getMembres().contains(OFplayer)) {
             main.sendDebug(guild.getMembres().toString());
-            player.sendMessage(utilsGen.colorize("&cCe joueur n'est pas dans votre guilde."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cCe joueur n'est pas dans votre guilde."));
             return;
         }
         if(guild.getOfficier().contains(OFplayer)) {
             main.sendDebug(guild.getOfficier().toString());
-            player.sendMessage(utilsGen.colorize("&cCe joueur est déjà officier de la guilde."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cCe joueur est déjà officier de la guilde."));
             return;
         }
 

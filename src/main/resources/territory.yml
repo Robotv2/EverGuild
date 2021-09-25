@@ -1,0 +1,12 @@
+boss1:
+  owner: guild-UUID or null
+  entity:
+    UUID:
+    type: skeleton-1
+    spawn:
+      X: 90
+      Y: 72
+      Z: 9
+      YAW: 180
+      PITCH: 180
+      WORLD: World

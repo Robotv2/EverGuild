@@ -26,29 +26,28 @@ public class utilsSchem {
     }
 
     public void initSchem(Player player, String schem) {
-        schematics.remove(player.getUniqueId());
         schematics.put(player.getUniqueId(), schem);
     }
 
     public void loadSchem(Player player) {
         if(!main.getUtils().getIsland().isInGuildIsland(player)) {
-            player.sendMessage(utilsGen.colorize("&cVous ne pouvez pas faire ça ici."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous ne pouvez pas faire ça ici."));
             return;
         }
         if(getCurrentSchem(player) == null) {
-            player.sendMessage(utilsGen.colorize("&cVous n'avez pas de schematics en cours."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous n'avez pas de schematics en cours."));
             return;
         }
 
         load.add(player);
         Bukkit.dispatchCommand(player, "schem load island-" + getCurrentSchem(player));
-        player.sendMessage(utilsGen.colorize("&7Votre schematics a bien été chargé."));
+        player.sendMessage(utilsGen.colorize(main.prefix + "&7Votre schematics a bien été chargé."));
         load.remove(player);
     }
 
     public void paste(Player player, boolean can) {
         if(!can) {
-            player.sendMessage(utilsGen.colorize("&cVous n'avez plus accès à ce schematics."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous n'avez plus accès à ce schematics."));
             schematics.remove(player.getUniqueId());
             return;
         }
@@ -58,7 +57,7 @@ public class utilsSchem {
 
         paste.add(player);
         Bukkit.dispatchCommand(player, "/paste -a");
-        player.sendMessage(utilsGen.colorize("&7Vous venez de placer votre schematics. Vous pouvez utiliser le &e//undo &7pour recommencer."));
+        player.sendMessage(utilsGen.colorize(main.prefix + "&7Vous venez de placer votre schematics. Vous pouvez utiliser le &e//undo &7pour recommencer."));
 
         paste.remove(player);
         schematics.remove(player.getUniqueId());

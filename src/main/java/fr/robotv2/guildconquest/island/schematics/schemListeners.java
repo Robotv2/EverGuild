@@ -54,23 +54,30 @@ public class schemListeners implements Listener {
 
         String cmd = e.getMessage();
 
-        if(cmd.startsWith("//undo")) {
+        if(cmd.startsWith("//undo") || cmd.startsWith("/undo")) {
                 if(!utils.undo.containsKey(player.getUniqueId())) {
-                    player.sendMessage(utilsGen.colorize("&cVous n'avez rien a undo."));
+                    player.sendMessage(utilsGen.colorize(main.prefix + "&cVous n'avez rien a undo."));
                     e.setCancelled(true);
                     return;
                 }
+                utils.schematics.put(player.getUniqueId(), "to-undo");
                 String schem = utils.undo.get(player.getUniqueId());
                 utils.undo.remove(player.getUniqueId());
                 utils.addSchem(player, schem, 1);
+                utils.schematics.remove(player.getUniqueId());
         }
         else if(cmd.startsWith("//paste")) {
-            if(!main.getUtils().getIsland().getSchematics().paste.contains(player)) {
+            if(!utils.paste.contains(player)) {
                 e.setCancelled(true);
             }
         }
         else if(cmd.startsWith("//schem") || cmd.startsWith("/schem")) {
-            if(!main.getUtils().getIsland().getSchematics().load.contains(player)) {
+            if(!utils.load.contains(player)) {
+                e.setCancelled(true);
+            }
+        }
+        else if(cmd.startsWith("/rotate")) {
+            if(!utils.schematics.containsKey(player.getUniqueId())) {
                 e.setCancelled(true);
             }
         }

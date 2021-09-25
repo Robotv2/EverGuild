@@ -26,10 +26,7 @@ public class utilsGuild {
 
     //GUILD FETCHER
     public Guild getGuild(OfflinePlayer player) {
-        if(player.isOnline())
-            return getGuild(main.getUtils().getCache().getCache(player.getPlayer()));
-        else
-            return getGuild(main.getMySQl().getGetter().getGuildMysql(player));
+        return getGuild(main.getUtils().getCache().getCache(player.getPlayer()));
     }
 
     public Guild getGuild(UUID uuid) {
@@ -147,6 +144,7 @@ public class utilsGuild {
     }
 
     public void sendMessageToAllGuild(UUID guildUUID, String message, boolean prefix) {
+        if(guildUUID == null) return;
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
 
         out.writeUTF("message-guild");

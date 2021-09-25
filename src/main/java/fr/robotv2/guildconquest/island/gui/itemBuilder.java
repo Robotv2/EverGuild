@@ -271,7 +271,6 @@ public class itemBuilder {
                 for(int i=0; i<=inv.getSize() - 1; i++) {
                     inv.setItem(i, getEmptySlots());
                 }
-                return;
         }
     }
 }

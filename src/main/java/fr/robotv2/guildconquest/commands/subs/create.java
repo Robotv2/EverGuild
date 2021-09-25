@@ -28,11 +28,11 @@ public class create {
         String name = args[1];
 
         if(!player.hasPermission("guild.command.create")) {
-            player.sendMessage(utilsGen.colorize("&cVous n'avez pas la permission d'exécuter cette commande."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous n'avez pas la permission d'exécuter cette commande."));
             return;
         }
         if(utils.isInGuild(player))  {
-            player.sendMessage(utilsGen.colorize("&cVous êtes déjà dans une guilde."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous êtes déjà dans une guilde."));
             return;
         }
 

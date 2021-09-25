@@ -62,7 +62,7 @@ public class islandListeners implements Listener {
         Guild guild = main.getUtils().getUtilsGuild().getGuild(player);
         if(guild == null || !worldName.endsWith(guild.getUuid().toString())) {
             e.setCancelled(true);
-            player.sendMessage(utilsGen.colorize("&cVous ne pouvez pas faire ça ici."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous ne pouvez pas faire ça ici."));
         }
     }
 
@@ -75,7 +75,7 @@ public class islandListeners implements Listener {
         Guild guild = main.getUtils().getUtilsGuild().getGuild(player);
         if(guild == null || !worldName.endsWith(guild.getUuid().toString())) {
             e.setCancelled(true);
-            player.sendMessage(utilsGen.colorize("&cVous ne pouvez pas faire ça ici."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous ne pouvez pas faire ça ici."));
         }
     }
 
@@ -86,7 +86,7 @@ public class islandListeners implements Listener {
             Guild guild = main.getUtils().getUtilsGuild().getGuild(player);
             if(guild == null || !player.getWorld().getName().endsWith(guild.getUuid().toString())) {
                 e.setCancelled(true);
-                player.sendMessage(utilsGen.colorize("&cVous ne pouvez pas faire ça ici."));
+                player.sendMessage(utilsGen.colorize(main.prefix + "&cVous ne pouvez pas faire ça ici."));
             }
         }
     }
@@ -109,7 +109,7 @@ public class islandListeners implements Listener {
 
             npc.destroy();
             startNpcReset(player.getUniqueId());
-            player.sendMessage(utilsGen.colorize("&7Vous venez de récupérer le pnj. Appuyer sur shift n'importe où pour le re-déposer."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&fVous venez de récuperer votre &ePNJ. &fAppuyer sur shift n'importe où pour le re-déposer."));
             return;
         }
         main.getUtils().getIsland().openIslandGuildMenu(player);
@@ -122,7 +122,7 @@ public class islandListeners implements Listener {
             hasNpc.remove(player.getUniqueId());
             npcLoc.remove(player.getUniqueId());
             main.getUtils().getIsland().createNpc(player.getLocation());
-            player.sendMessage(utilsGen.colorize("&7Vous venez de poser le PNJ."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&fVous venez de placer votre &ePNJ &fà votre localisation."));
         }
     }
 
@@ -291,7 +291,7 @@ public class islandListeners implements Listener {
                 String schem = data.get(list, PersistentDataType.STRING);
                 main.getUtils().getIsland().getSchematics().initSchem(player, schem);
                 main.getUtils().getIsland().getSchematics().loadSchem(player);
-                player.sendMessage(utilsGen.colorize("&7Vous venez de charger le schématique: " + schem));
+                player.sendMessage(utilsGen.colorize(main.prefix + "&7Vous venez de charger le schématique: " + schem));
                 player.closeInventory();
             }
         }
@@ -312,7 +312,7 @@ public class islandListeners implements Listener {
                 taskID.remove(playerUUID);
 
                 if(player != null && player.isOnline())
-                    player.sendMessage(utilsGen.colorize("&cVous avez pris trop de temps pour placer le pnj."));
+                    player.sendMessage(utilsGen.colorize(main.prefix + "&cVous avez pris trop de temps pour placer le PNJ."));
             }
         }, 400L);
         taskID.put(playerUUID, task.getTaskId());

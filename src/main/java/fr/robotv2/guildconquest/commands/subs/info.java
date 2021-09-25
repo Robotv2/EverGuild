@@ -25,11 +25,11 @@ public class info {
         Guild guild = utils.getGuild(player);
 
         if(!player.hasPermission("guild.command.info")) {
-            player.sendMessage(utilsGen.colorize("&cVous n'avez pas la permission d'exécuter cette commande."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous n'avez pas la permission d'exécuter cette commande."));
             return;
         }
         if(guild == null) {
-            player.sendMessage(utilsGen.colorize("&cVous n'êtes dans aucune guilde."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous n'êtes dans aucune guilde."));
             return;
         }
         sendInfo(player, guild);

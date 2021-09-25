@@ -293,7 +293,7 @@ public class utilsIsland {
         if(!player.getWorld().equals(world)) return;
 
         teleportBack(player);
-        player.sendMessage(utilsGen.colorize("&cL'accès à l'île vous a été restreint."));
+        player.sendMessage(utilsGen.colorize(main.prefix + "&cL'accès à l'île vous a été restreint."));
     }
 
     public boolean isInGuildIsland(Player player) {

@@ -38,8 +38,6 @@ public class pluginMessageListener implements PluginMessageListener {
         if (channel.equals(main.channel)) {
             final ByteArrayDataInput in = ByteStreams.newDataInput(message);
             final String sub = in.readUTF();
-
-            main.sendDebug("Nouveau message reçu: " + sub);
             switch (sub.toLowerCase()) {
                 case "get-credentials":
                     guildUUID = UUID.fromString(in.readUTF());
@@ -60,17 +58,6 @@ public class pluginMessageListener implements PluginMessageListener {
                     utils.guildByUUID.put(guildUUID, guild);
                     return;
 
-                case "get-mysql":
-                    String host = in.readUTF();
-                    String port  = in.readUTF();
-                    String database = in.readUTF();
-                    String username = in.readUTF();
-                    String password = in.readUTF();
-                    String ssl = in.readUTF();
-
-                    main.getMySQl().initializeConnection(host, port, database, username, password, ssl);
-                    return;
-
                 case "invite-player":
                     guildUUID = UUID.fromString(in.readUTF()); //GUILD UUID
                     player = Bukkit.getPlayer(UUID.fromString(in.readUTF())); //PLAYER UUID
@@ -78,7 +65,7 @@ public class pluginMessageListener implements PluginMessageListener {
                     main.getUtils().getUtilsGuild().actualizeForOnly(guildUUID, player);
                     guild = main.getUtils().getUtilsGuild().getGuild(guildUUID);
 
-                    player.sendMessage(utilsGen.colorize("&7Vous venez de reçevoir une invitation pour rejoindre la guilde: &f" + guild.getName()));
+                    player.sendMessage(utilsGen.colorize(main.prefix + "&7Vous venez de reçevoir une invitation pour rejoindre la guilde: &f" + guild.getName()));
                     main.getUtils().getUtilsMessage().inviteAccept(player);
                     main.getUtils().getUtilsMessage().inviteDeny(player);
                     return;
@@ -89,6 +76,7 @@ public class pluginMessageListener implements PluginMessageListener {
                         main.getUtils().getUtilsGuild().guildByUUID.remove(guildUUID);
                     }
                     main.getUtils().getIsland().deleteWorld(guildUUID);
+                    main.getTerritory().getUtil().clearAllTerritoryFromGuild(guildUUID);
                     return;
 
                 case "initialize-teleport":
@@ -140,6 +128,10 @@ public class pluginMessageListener implements PluginMessageListener {
                     main.getUtils().getIsland().initializeChest(guildUUID);
                     return;
 
+                /////////////
+                //INVENTORY//
+                /////////////
+
                 case "open-inventory-list":
                     playerUUID = UUID.fromString(in.readUTF());
                     String island = in.readUTF();
@@ -174,6 +166,10 @@ public class pluginMessageListener implements PluginMessageListener {
                     player = Bukkit.getPlayer(playerUUID);
                     main.getUtils().getIsland().getGui().openSchemList(player, initial);
                     return;
+
+                //////////////
+                //SCHEMATICS//
+                //////////////
 
                 case "paste-schem":
                     playerUUID = UUID.fromString(in.readUTF());

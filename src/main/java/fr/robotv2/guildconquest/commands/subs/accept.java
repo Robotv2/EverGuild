@@ -23,7 +23,7 @@ public class accept {
         Player player = (Player) sender;
 
         if(!player.hasPermission("guild.command.accept")) {
-            player.sendMessage(utilsGen.colorize("&cVous n'avez pas la permission d'exécuter cette commande."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous n'avez pas la permission d'exécuter cette commande."));
             return;
         }
 

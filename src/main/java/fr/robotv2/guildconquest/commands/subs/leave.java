@@ -24,16 +24,16 @@ public class leave {
         Guild guild = utils.getGuild(player);
 
         if(!player.hasPermission("guild.command.leave")) {
-            player.sendMessage(utilsGen.colorize("&cVous n'avez pas la permission d'exécuter cette commande."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous n'avez pas la permission d'exécuter cette commande."));
             return;
         }
         if(guild == null)  {
-            player.sendMessage(utilsGen.colorize("&cVous n'êtes dans aucune guilde."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous n'êtes dans aucune guilde."));
             return;
         }
         if(utils.isChef(guild, player)) {
-            player.sendMessage(utilsGen.colorize("&cVous ne pouvez quitter la guilde car vous êtes le chef."));
-            player.sendMessage(utilsGen.colorize("&cSi vous voulez supprimer la guilde: /guild delete."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous ne pouvez quitter la guilde car vous êtes le chef."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cSi vous voulez supprimer la guilde: /guild delete."));
             return;
         }
         if(!main.getUtils().getConfirm().hasConfirmed(player)) {

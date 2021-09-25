@@ -27,15 +27,15 @@ public class demote {
 
 
         if(!player.hasPermission("guild.command.demote")) {
-            player.sendMessage(utilsGen.colorize("&cVous n'avez pas la permission d'exécuter cette commande."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous n'avez pas la permission d'exécuter cette commande."));
             return;
         }
         if(guild == null)  {
-            player.sendMessage(utilsGen.colorize("&cVous n'êtes dans aucune guilde."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous n'êtes dans aucune guilde."));
             return;
         }
         if(!utils.isChef(guild, player)) {
-            player.sendMessage(utilsGen.colorize("&cVous devez être chef de la guilde pour pouvoir faire cette commande."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous devez être chef de la guilde pour pouvoir faire cette commande."));
             return;
         }
         if(args.length < 2) {
@@ -44,16 +44,16 @@ public class demote {
         }
         String name = args[1];
         if(player.getName().equalsIgnoreCase(name)) {
-            player.sendMessage(utilsGen.colorize("&cVous ne pouvez pas vous rétrograder."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous ne pouvez pas vous rétrograder."));
             return;
         }
         OfflinePlayer OFplayer = Bukkit.getOfflinePlayer(name);
         if(!guild.getMembres().contains(OFplayer)) {
-            player.sendMessage(utilsGen.colorize("&cCe joueur n'est pas dans votre guilde."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cCe joueur n'est pas dans votre guilde."));
             return;
         }
         if(!guild.getOfficier().contains(OFplayer)) {
-            player.sendMessage(utilsGen.colorize("&cVous ne pouvez pas rétrograder ce joueur car il est déjà membre."));
+            player.sendMessage(utilsGen.colorize(main.prefix + "&cVous ne pouvez pas rétrograder ce joueur car il est déjà membre."));
             return;
         }
 

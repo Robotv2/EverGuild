@@ -2,7 +2,6 @@ package fr.robotv2.guildconquest.island.gui;
 
 import fr.robotv2.guildconquest.island.utilsIsland;
 import fr.robotv2.guildconquest.main;
-import fr.robotv2.guildconquest.utils.utilsGen;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -10,6 +9,8 @@ import org.bukkit.inventory.Inventory;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static fr.robotv2.guildconquest.utils.utilsGen.colorize;
 
 public class guiIslandUtils {
 
@@ -23,7 +24,7 @@ public class guiIslandUtils {
     }
 
     public void openInventory(Player player, utilsIsland.islandType island) {
-        Inventory inv = Bukkit.createInventory(new holders.islandHolderMenu(), 27, utilsGen.colorize("&fÎle " + island.toString().toLowerCase() + " > MENU"));
+        Inventory inv = Bukkit.createInventory(new holders.islandHolderMenu(), 27, colorize("&fÎle " + island.toString().toLowerCase() + " > MENU"));
         getItems().setupEmptySlots(inv, utilsIsland.guiType.MENU);
 
         inv.setItem(11, getItems().getIslandList(island));
@@ -36,7 +37,7 @@ public class guiIslandUtils {
     }
 
     public void openInventoryList(Player player, utilsIsland.islandType island, int page, String initial) {
-        Inventory inv = Bukkit.createInventory(new holders.islandHolderList(), 54, utilsGen.colorize("&fÎle " + island.toString().toLowerCase() + " > LISTE"));
+        Inventory inv = Bukkit.createInventory(new holders.islandHolderList(), 54, colorize("&fÎle " + island.toString().toLowerCase() + " > LISTE"));
         getItems().setupEmptySlots(inv, utilsIsland.guiType.LIST);
 
         int count = 0;
@@ -56,7 +57,7 @@ public class guiIslandUtils {
     }
 
     public void openBannedPlayersInventory(Player player, int page, String initial, boolean restricted) {
-        Inventory inv = Bukkit.createInventory(new holders.islandHolderBannedPlayer(), 54, utilsGen.colorize("&f> Joueurs bannis"));
+        Inventory inv = Bukkit.createInventory(new holders.islandHolderBannedPlayer(), 54, colorize("&f> Joueurs bannis"));
         getItems().setupEmptySlots(inv, utilsIsland.guiType.LIST);
 
         int count = 0;
@@ -78,7 +79,7 @@ public class guiIslandUtils {
     }
 
     public void openSchemShop(Player player, int page, String initial) {
-        Inventory inv = Bukkit.createInventory(new holders.islandHolderSchemShop(), 54, utilsGen.colorize("&f> Schematics shop"));
+        Inventory inv = Bukkit.createInventory(new holders.islandHolderSchemShop(), 54, colorize("&f> Schematics shop"));
         getItems().setupEmptySlots(inv, utilsIsland.guiType.LIST);
 
         int count = 0;
@@ -100,7 +101,7 @@ public class guiIslandUtils {
     }
 
     public void openSchemList(Player player, String initial) {
-        Inventory inv = Bukkit.createInventory(new holders.islandHolderSchemList(), 54, utilsGen.colorize("&f> Schematics shop"));
+        Inventory inv = Bukkit.createInventory(new holders.islandHolderSchemList(), 54, colorize("&f> Schematics shop"));
         getItems().setupEmptySlots(inv, utilsIsland.guiType.LIST);
 
         int count = 0;
